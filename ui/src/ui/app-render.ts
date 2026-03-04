@@ -663,11 +663,15 @@ export function renderApp(state: AppViewState) {
                   void saveAgentFile(state, resolvedAgentId, name, content);
                 },
                 onToolsProfileChange: (agentId, profile, clearAllow) => {
-                  if (!configValue) {
+                  const liveConfig = (state.configForm ?? state.configSnapshot?.config) as {
+                    agents?: { list?: unknown[] };
+                  } | null;
+                  if (!liveConfig) {
                     return;
                   }
-                  const config = configValue as { agents?: { list?: unknown[] } };
-                  const list = Array.isArray(config.agents?.list) ? [...config.agents.list] : [];
+                  const list = Array.isArray(liveConfig.agents?.list)
+                    ? [...liveConfig.agents.list]
+                    : [];
                   let index = list.findIndex(
                     (entry) =>
                       entry &&
@@ -700,11 +704,15 @@ export function renderApp(state: AppViewState) {
                   }
                 },
                 onToolsOverridesChange: (agentId, alsoAllow, deny) => {
-                  if (!configValue) {
+                  const liveConfig = (state.configForm ?? state.configSnapshot?.config) as {
+                    agents?: { list?: unknown[] };
+                  } | null;
+                  if (!liveConfig) {
                     return;
                   }
-                  const config = configValue as { agents?: { list?: unknown[] } };
-                  const list = Array.isArray(config.agents?.list) ? [...config.agents.list] : [];
+                  const list = Array.isArray(liveConfig.agents?.list)
+                    ? [...liveConfig.agents.list]
+                    : [];
                   let index = list.findIndex(
                     (entry) =>
                       entry &&
