@@ -666,11 +666,9 @@ export function renderApp(state: AppViewState) {
                   if (!configValue) {
                     return;
                   }
-                  const list = (configValue as { agents?: { list?: unknown[] } }).agents?.list;
-                  if (!Array.isArray(list)) {
-                    return;
-                  }
-                  const index = list.findIndex(
+                  const config = configValue as { agents?: { list?: unknown[] } };
+                  const list = Array.isArray(config.agents?.list) ? [...config.agents.list] : [];
+                  let index = list.findIndex(
                     (entry) =>
                       entry &&
                       typeof entry === "object" &&
@@ -678,6 +676,16 @@ export function renderApp(state: AppViewState) {
                       (entry as { id?: string }).id === agentId,
                   );
                   if (index < 0) {
+                    const newEntry: Record<string, unknown> = { id: agentId };
+                    const tools: Record<string, unknown> = {};
+                    if (profile) {
+                      tools.profile = profile;
+                    }
+                    if (Object.keys(tools).length > 0) {
+                      newEntry.tools = tools;
+                    }
+                    list.push(newEntry);
+                    updateConfigFormValue(state, ["agents", "list"], list);
                     return;
                   }
                   const basePath = ["agents", "list", index, "tools"];
@@ -694,11 +702,9 @@ export function renderApp(state: AppViewState) {
                   if (!configValue) {
                     return;
                   }
-                  const list = (configValue as { agents?: { list?: unknown[] } }).agents?.list;
-                  if (!Array.isArray(list)) {
-                    return;
-                  }
-                  const index = list.findIndex(
+                  const config = configValue as { agents?: { list?: unknown[] } };
+                  const list = Array.isArray(config.agents?.list) ? [...config.agents.list] : [];
+                  let index = list.findIndex(
                     (entry) =>
                       entry &&
                       typeof entry === "object" &&
@@ -706,6 +712,20 @@ export function renderApp(state: AppViewState) {
                       (entry as { id?: string }).id === agentId,
                   );
                   if (index < 0) {
+                    // Agent not in config yet (e.g. disk-scanned only) – add entry so Save becomes enabled
+                    const newEntry: Record<string, unknown> = { id: agentId };
+                    const tools: Record<string, unknown> = {};
+                    if (alsoAllow.length > 0) {
+                      tools.alsoAllow = alsoAllow;
+                    }
+                    if (deny.length > 0) {
+                      tools.deny = deny;
+                    }
+                    if (Object.keys(tools).length > 0) {
+                      newEntry.tools = tools;
+                    }
+                    list.push(newEntry);
+                    updateConfigFormValue(state, ["agents", "list"], list);
                     return;
                   }
                   const basePath = ["agents", "list", index, "tools"];
