@@ -336,7 +336,6 @@ export async function ensureAgentWorkspace(params?: {
   await fs.mkdir(dir, { recursive: true });
 
   if (!params?.ensureBootstrapFiles) {
-    await fs.mkdir(path.join(dir, "memory"), { recursive: true });
     return { dir };
   }
 
