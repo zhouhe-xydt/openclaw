@@ -123,6 +123,19 @@ describe("failover-error", () => {
         message: ZHIPUAI_WEEKLY_MONTHLY_LIMIT_EXHAUSTED_MESSAGE,
       }),
     ).toBe("rate_limit");
+    expect(
+      resolveFailoverReasonFromError({
+        message: "LLM error: monthly limit reached",
+      }),
+    ).toBe("rate_limit");
+  });
+
+  it("keeps raw-text 402 weekly/monthly limit errors in billing", () => {
+    expect(
+      resolveFailoverReasonFromError({
+        message: "402 Payment Required: Weekly/Monthly Limit Exhausted",
+      }),
+    ).toBe("billing");
   });
 
   it("infers format errors from error messages", () => {
