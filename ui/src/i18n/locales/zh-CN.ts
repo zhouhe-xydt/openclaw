@@ -160,6 +160,8 @@ export const zh_CN: TranslationMap = {
       fallbacksPlaceholder: "provider/model, provider/model",
       loading: "加载中…",
       unavailable: "不可用",
+      currentModel: "当前 ({model})",
+      noConfiguredModels: "未配置模型",
     },
     context: {
       title: "代理上下文",
@@ -231,6 +233,13 @@ export const zh_CN: TranslationMap = {
     skills: {
       title: "技能",
       subtitle: "代理技能允许列表及工作区技能。",
+      groups: {
+        workspace: "工作区技能",
+        builtIn: "内置技能",
+        installed: "已安装技能",
+        extra: "额外技能",
+        other: "其他技能",
+      },
       useAll: "使用全部",
       disableAll: "全部禁用",
       loadConfig: "加载网关配置以设置每代理技能。",

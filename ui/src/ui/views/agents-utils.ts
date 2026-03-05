@@ -408,15 +408,19 @@ function resolveConfiguredModels(
 export function buildModelOptions(
   configForm: Record<string, unknown> | null,
   current?: string | null,
+  t?: (key: string, params?: Record<string, string>) => string,
 ) {
   const options = resolveConfiguredModels(configForm);
   const hasCurrent = current ? options.some((option) => option.value === current) : false;
   if (current && !hasCurrent) {
-    options.unshift({ value: current, label: `Current (${current})` });
+    const label = t
+      ? t("agents.overview.currentModel", { model: current })
+      : `Current (${current})`;
+    options.unshift({ value: current, label });
   }
   if (options.length === 0) {
     return html`
-      <option value="" disabled>No configured models</option>
+      <option value="" disabled>${t ? t("agents.overview.noConfiguredModels") : "No configured models"}</option>
     `;
   }
   return options.map((option) => html`<option value=${option.value}>${option.label}</option>`);

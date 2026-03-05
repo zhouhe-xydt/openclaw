@@ -161,6 +161,8 @@ export const en: TranslationMap = {
       fallbacksPlaceholder: "provider/model, provider/model",
       loading: "Loading…",
       unavailable: "Unavailable",
+      currentModel: "Current ({model})",
+      noConfiguredModels: "No configured models",
     },
     context: {
       title: "Agent Context",
@@ -234,6 +236,13 @@ export const en: TranslationMap = {
     skills: {
       title: "Skills",
       subtitle: "Per-agent skill allowlist and workspace skills.",
+      groups: {
+        workspace: "Workspace Skills",
+        builtIn: "Built-in Skills",
+        installed: "Installed Skills",
+        extra: "Extra Skills",
+        other: "Other Skills",
+      },
       useAll: "Use All",
       disableAll: "Disable All",
       loadConfig: "Load the gateway config to set per-agent skills.",

@@ -459,6 +459,14 @@ export function renderAgentSkills(params: {
   `;
 }
 
+const SKILL_GROUP_LABEL_KEYS: Record<string, string> = {
+  workspace: "agents.skills.groups.workspace",
+  "built-in": "agents.skills.groups.builtIn",
+  installed: "agents.skills.groups.installed",
+  extra: "agents.skills.groups.extra",
+  other: "agents.skills.groups.other",
+};
+
 function renderAgentSkillGroup(
   group: SkillGroup,
   params: {
@@ -470,10 +478,11 @@ function renderAgentSkillGroup(
   },
 ) {
   const collapsedByDefault = group.id === "workspace" || group.id === "built-in";
+  const labelKey = SKILL_GROUP_LABEL_KEYS[group.id] ?? "agents.skills.groups.other";
   return html`
     <details class="agent-skills-group" ?open=${!collapsedByDefault}>
       <summary class="agent-skills-header">
-        <span>${group.label}</span>
+        <span>${t(labelKey)}</span>
         <span class="muted">${group.skills.length}</span>
       </summary>
       <div class="list skills-grid">
